@@ -10,6 +10,11 @@ eureka:
     service-url:
       defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka  
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
 ---
 spring:
   profiles: item1
