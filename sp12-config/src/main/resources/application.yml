@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: config-server
+  rabbitmq:
+    host: 192.168.20.130
+    port: 5672
+    username: admin
+    password: admin
+  
+  profiles:
+    active: native
+  #本地路径默认：[classpath:/, classpath:/config, file:./, file:./config]  
+  #默认配置
+  #cloud:
+  #  config:
+  #    server:
+  #      native:
+  #        search-locations: classpath:/config  
+        
+  #cloud:
+  #  config:
+  #    server:
+  #      git:
+  #        uri: https://github.com/zhangyizhao0410/SpringCloud #仓库路径
+  #        searchPaths: sp-config #仓库下的一个子目录，里面存放的是配置文件
+          #username: your-username
+          #password: your-password
+    
+server:
+  port: 6001
+    
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka
+  instance:
+    prefer-ip-address: true # 使用ip进行注册
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port} # 界面列表中显示的格式也显示ip      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
