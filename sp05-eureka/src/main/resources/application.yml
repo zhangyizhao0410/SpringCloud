@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: eureka-server
+    
+#server:
+ # port: 2001
+  
+eureka:
+  server:
+    enable-self-preservation: false   #自我保护  true表示一台微服务宕机，保护起来不删除注册信息。false相反    
+  #instance:
+   # hostname: eureka1   #eureka 集群服务器之间，通过 hostname 来区分
+  #client:
+   # register-with-eureka: false #不相自己注册
+   # fetch-registry: false  #不从自己拉去数据
+  instance:
+    prefer-ip-address: true # 使用ip进行注册
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port} # 界面列表中显示的格式也显示ip   
+---
+spring:
+  profiles: eureka1   
+server:
+  port: 2001
+  
+eureka:
+  instance:
+    hostname: eureka1   
+  client:
+    service-url:
+      defaultZone: http://eureka1:2002/eureka
+---
+spring:
+  profiles: eureka2  
+server:
+  port: 2002
+  
+eureka:
+  instance:
+    hostname: eureka2   
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka        
